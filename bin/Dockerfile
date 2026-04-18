@@ -8,7 +8,8 @@ ENV GOPROXY=https://goproxy.cn,direct
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -ldflags="-s -w" -o  demo main.go
+#RUN go build -ldflags="-s -w" -o  demo main.go
+RUN go build -o  demo main.go
 
 FROM alpine
 
