@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('拉去代码') {
             steps {
-                git credentialsId: 'ce31a3db-75be-4756-aa68-917e3305a5e0', url: 'git@github.com:lowbroth/demo.git'
+                 git branch: 'main', credentialsId: 'ce31a3db-75be-4756-aa68-917e3305a5e0', url: 'git@github.com:lowbroth/demo.git'
             }
         }
 
