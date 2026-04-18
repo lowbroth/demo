@@ -20,8 +20,9 @@ pipeline {
            stage('构建镜像') {
                     steps {
 
-sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.100', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''pwd && docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/subject', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-}
+sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.100', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /study/subject
+docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/subject', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                    }
 }
     }
 }
