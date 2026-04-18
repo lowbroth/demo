@@ -1,15 +1,22 @@
-FROM golang:1.25.4-alpine3.21 AS builder
+# syntax=docker/dockerfile:1.4
+
+FROM golang:1.25-bullseye AS builder
 
 WORKDIR /build
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOPROXY=https://goproxy.cn,direct
+
+ENV CGO_ENABLED=0 \
+    GOOS=linux \
+    GOPROXY=https://goproxy.cn,direct
 
 COPY go.mod go.sum ./
-RUN go mod download
+
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
+
 COPY . .
-#RUN go build -ldflags="-s -w" -o  demo main.go
-RUN go build -o  demo main.go
+
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    go build -ldflags="-s -w" -o demo main.go
 
 FROM alpine
 
@@ -20,4 +27,3 @@ COPY --from=builder /build/demo /build/demo
 COPY --from=builder /build/configs /build/configs
 
 CMD ["./demo"]
-
