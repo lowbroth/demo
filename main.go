@@ -1,6 +1,7 @@
 package main
 
 import (
+		"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -17,6 +18,8 @@ func main() {
 
 	engine.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "success", "version": 1.0, "name": serviceConfig.ServiceName})
+				fmt.Println("好的")
+		fmt.Println("好的")
 	})
 	engine.Run(":8080")
 }

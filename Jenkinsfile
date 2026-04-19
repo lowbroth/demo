@@ -24,5 +24,13 @@ sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.100', transfe
 docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 600000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/subject', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                     }
 }
+
+   stage('推送镜像到仓库') {
+            steps {
+      sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.100', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker login -u admin -p Harbor12345  192.168.42.100:8010
+docker tag demo:latest 192.168.42.100:8010/image/demo:latest
+docker push 192.168.42.100:8010/image/demo:latest''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])       }
+        }
+        
     }
 }
