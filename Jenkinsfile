@@ -31,6 +31,12 @@ docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 600000, flatten
 docker tag demo:latest 192.168.42.100:8010/image/demo:latest
 docker push 192.168.42.100:8010/image/demo:latest''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])       }
         }
+
+
+           stage('k8s部署') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.101', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f crazy-deployment.yml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/demo', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/crazy-deployment.yml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+      }
         
     }
 }
