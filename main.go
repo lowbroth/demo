@@ -1,7 +1,7 @@
 package main
 
 import (
-		"fmt"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -11,14 +11,19 @@ import (
 
 func main() {
 	engine := gin.Default()
-	viper.New()
-	viper.SetConfigName("configs/demo.yml")
+	v := viper.New()
+	v.SetConfigFile("configs/demo.yml")
+	err := v.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("读取配置文件错误: %s \n", err))
+	}
+
 	serviceConfig := &ServerConfig{}
-	viper.Unmarshal(serviceConfig)
+	v.Unmarshal(serviceConfig)
 
 	engine.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "success", "version": 1.0, "name": serviceConfig.ServiceName})
-				fmt.Println("好的")
+		fmt.Println("好的")
 		fmt.Println("好的")
 	})
 	engine.Run(":8080")
