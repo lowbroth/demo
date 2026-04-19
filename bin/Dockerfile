@@ -18,6 +18,7 @@ ENV TZ=Asia/Shanghai
 
 COPY --from=builder /build/demo /build/demo
 COPY --from=builder /build/configs /build/configs
+EXPOSE 8080
 
 CMD ["./demo"]
 

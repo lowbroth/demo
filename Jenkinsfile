@@ -21,8 +21,8 @@ pipeline {
                     steps {
 
 sshPublisher(publishers: [sshPublisherDesc(configName: '192.168.42.100', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /study/subject
-docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/subject', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-}
+docker build -f bin/Dockerfile -t demo:latest .''', execTimeout: 600000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/subject', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                    }
 }
     }
 }
