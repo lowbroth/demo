@@ -25,7 +25,7 @@ WORKDIR /build
 ENV TZ=Asia/Shanghai
 
 COPY --from=builder /build/demo .
-#COPY --from=builder /build/configs ./configs
+COPY --from=builder /build/configs ./configs
 
 EXPOSE 8080
 CMD ["./demo"]
