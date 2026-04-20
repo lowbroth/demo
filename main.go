@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -25,6 +26,13 @@ func main() {
 		c.JSON(200, gin.H{"message": "success", "version": 1.0, "name": serviceConfig.ServiceName})
 		fmt.Println("好的")
 		fmt.Println("好的")
+	})
+	v.WatchConfig()
+	v.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("config file channed： ", e.Name)
+		_ = v.ReadInConfig()
+		_ = v.Unmarshal(&serviceConfig)
+		fmt.Println(serviceConfig)
 	})
 	engine.Run(":8080")
 }
