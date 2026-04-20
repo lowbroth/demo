@@ -21,12 +21,6 @@ func main() {
 
 	serviceConfig := &ServerConfig{}
 	v.Unmarshal(serviceConfig)
-
-	engine.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "success", "version": 1.0, "name": serviceConfig.ServiceName})
-		fmt.Println("好的")
-		fmt.Println("好的")
-	})
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file channed： ", e.Name)
@@ -34,6 +28,13 @@ func main() {
 		_ = v.Unmarshal(&serviceConfig)
 		fmt.Println(serviceConfig)
 	})
+
+	engine.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "success", "version": 1.0, "name": serviceConfig.ServiceName})
+		fmt.Println("好的")
+		fmt.Println("好的")
+	})
+
 	engine.Run(":8080")
 }
 
